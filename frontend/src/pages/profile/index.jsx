@@ -113,11 +113,14 @@ const request = await clientServer.post("/user_update", {
 
       <div  className={style.profileContainer_details}>
 
-        <div  style={{display:"flex", gap:"0.2rem"}} >
+        <div     className={style.profileContainer_flex} > 
 
           <div style={{flex:"0.8"}} >
 
             <div style={{display:"flex", gap:"1.2rem", alignItems:"center", width:"fit content"}} >
+
+            
+
             
 <input type="text" className={style.nameEdit} value={userProfile.userId.name} onChange={(e) =>{
   setUserProfile({
@@ -129,11 +132,11 @@ const request = await clientServer.post("/user_update", {
   })
 }} />
 
-              <p  style={{color:"gray"}} > {userProfile.userId.username} </p>
-
+            
             </div>
 
             <div  style={{display:"flex", alignItems:"center", gap:"1.2rem"}}  >
+            <p  style={{color:"gray"}} > @{userProfile.userId.username} </p>
 
           
            
