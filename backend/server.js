@@ -9,10 +9,24 @@ import userRoutes from './routes/user.routes.js'
 dotenv.config();
 
 const app = express();
-app.use(cors({
-    origin: 'http://localhost:3000',
+const allowedOrigins = [
+    'http://localhost:3000',
+    'https://pro-connect-linkedin-clone-eight.vercel.app'
+  ];
+  
+  app.use(cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true
-}));
+  }));
+
+
+
 app.use(express.json());
 app.use(postRoutes)
 app.use(userRoutes)
