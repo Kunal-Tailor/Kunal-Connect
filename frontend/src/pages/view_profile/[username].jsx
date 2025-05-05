@@ -185,19 +185,26 @@ export default ViewProfile
 
 
 export async function getServerSideProps(context) {
+  try {
+    console.log("form view");
 
-console.log("form view")
+    const request = await clientServer.get("/user/get_profile_based_on_username", {
+      params: {
+        username: context.query.username,
+      },
+    });
 
-const request = await clientServer.get("/user/get_profile_based_on_username",{
-  params:{
-    username:context.query.username
+    console.log("Profile Data:", request.data);
+
+    return {
+      props: {
+        userProfile: request.data.profile,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching profile:", error.message);
+    return {
+      notFound: true, // will render 404 page
+    };
   }
-} )
-
-const response = await request.data;
-console.log(response)
-
-
-  return{props:{userProfile: request.data.profile}}
-  
 }
