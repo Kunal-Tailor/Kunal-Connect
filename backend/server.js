@@ -16,7 +16,8 @@ const allowedOrigins = [
   'https://pro-connect-linkedin-clone-gwwl3ef39-kumarshubhhs-projects.vercel.app',
   'https://pro-connect-linkedin-clone-dljuyh3vn-kumarshubhhs-projects.vercel.app',
    'https://pro-connect-linkedin-clone-g5b9joo56-kumarshubhhs-projects.vercel.app',
-   'https://pro-connect-linkedin-clone-iqk7c7d9b-kumarshubhhs-projects.vercel.app'
+   'https://pro-connect-linkedin-clone-iqk7c7d9b-kumarshubhhs-projects.vercel.app',
+   'https://pro-connect-linkedin-clone-jf149fsu4-kumarshubhhs-projects.vercel.app'
 ];
 
 app.use(cors({
