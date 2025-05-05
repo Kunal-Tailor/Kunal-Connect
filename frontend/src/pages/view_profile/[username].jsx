@@ -188,10 +188,10 @@ export async function getServerSideProps(context) {
   try {
     console.log("form view");
 
+    const username = context.query.username.trim(); // 👈 add this line
+
     const request = await clientServer.get("/user/get_profile_based_on_username", {
-      params: {
-        username: context.query.username,
-      },
+      params: { username },
     });
 
     console.log("Profile Data:", request.data);
