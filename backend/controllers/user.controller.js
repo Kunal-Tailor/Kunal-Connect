@@ -69,40 +69,45 @@ const convertUserDataToPDF = async (userData) => {
   };
   
 
-export const register = async(req, res )=>{
+  
+
+  export const register = async (req, res) => {
     try {
-
-        const {name ,email,password, username } = req.body;
-        if(!name  || !password  || !username)return res.status(400).json({message:"All fields Required"});
-
-        const user = await User.findOne({
-            email
-        })
-
-        if(user) return res.status(400).json({message:"User Allready exist "})
-
-            const hashedPassword = await bcrypt.hash(password,10) ;
-            const newUser = new User({
-                name ,
-                email,
-                password:hashedPassword,
-                username,
-            });
-
-            await newUser.save();
-
-            const profile = new Profile({userId:newUser._id})
-
-            await profile.save();
-
-            return res.json({message:"User registerd"})
-        
-    } catch (error)
-     {return res.status(500).json({message:error.message})
-        
+      const { name, email, password, username } = req.body;
+  
+      if (!name || !password || !username)
+        return res.status(400).json({ message: "All fields Required" });
+  
+      const existingUser = await User.findOne({ email });
+      if (existingUser)
+        return res.status(400).json({ message: "User Already Exists" });
+  
+      const hashedPassword = await bcrypt.hash(password, 10);
+  
+      const newUser = new User({
+        name,
+        email,
+        password: hashedPassword,
+        username,
+      });
+  
+      await newUser.save();
+  
+      const profile = new Profile({ userId: newUser._id });
+      await profile.save();
+  
+      // Abhi token generate nahi kar rahe hain
+  
+      return res.json({
+        message: "User registered successfully",
+        // Token ko abhi response me nahi bhejna hai
+      });
+  
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
     }
-}
-
+  };
+  
 
 export const login = async(req, res)=>{
 

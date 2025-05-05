@@ -63,19 +63,20 @@ const authSlice = createSlice({
         }
         )
         .addCase(registerUser.fulfilled, (state, action) => {
-            state.isLoading = false
-            state.isError = false
-            state.loggedIn=true
-            state.isSuccess = true
-            state.message = "Register is successful. Please login";
-
-        })
+            state.isLoading = false;
+            state.isError = false;
+            state.loggedIn = false;  // User ko directly login mat karo, pehle register karo
+            state.isSuccess = true;
+            state.message =  "User registered successfull";
+          })
+        
         .addCase(registerUser.rejected, (state, action) => {
-            state.isLoading = false
-            state.isError = true
-            
-            state.message = action.payload
+            console.log("Register rejected payload:", action.payload);
+            state.isLoading = false;
+            state.isError = true;
+            state.message = action.payload.message || "Something went wrong";
         })
+        
         .addCase(getAboutUser.fulfilled, (state, action) => {
             console.log("API Payload:", action.payload);
             state.isLoading = false

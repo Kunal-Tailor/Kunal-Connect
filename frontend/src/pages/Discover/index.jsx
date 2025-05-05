@@ -28,24 +28,28 @@ useEffect(() =>{
 
      <div className={style.userProfile}  >
 
-{authState.all_profiles_fetched && authState.all_users.map((user) => {
+     {authState.all_profiles_fetched && authState.all_users?.map((user) => {
+  if (!user?.userId) return null; // <-- safety check
 
-  return(
-    <div  onClick={() =>{
-      router.push(`/view_profile/${user.userId.username}`)
-    }}   key={user._id} className={style.userCard}  >
-      
-        <img  className={style.userCard_img} src={`${BASE_URL}/${user.userId.profilePicture}`} alt={user.name}  />
-        <div>
-          <h2 >{user.userId.name}</h2>
-          <p >{user.userId.username}</p>
-          </div>
-        
+  return (
+    <div 
+      onClick={() => router.push(`/view_profile/${user.userId.username}`)} 
+      key={user._id} 
+      className={style.userCard}
+    >
+      <img 
+        className={style.userCard_img} 
+        src={`${BASE_URL}/${user.userId.profilePicture}`} 
+        alt={user.userId.name || 'User'} 
+      />
+      <div>
+        <h2>{user.userId.name}</h2>
+        <p>{user.userId.username}</p>
       </div>
-      
-    
-  )
+    </div>
+  );
 })}
+
 
 
 </div>

@@ -35,30 +35,24 @@ return thunkAPI.fulfillWithValue(response.data.token)
 )
 
 export const registerUser = createAsyncThunk("user/register", async (user, thunkAPI) => {
-
     try {
-        const request = await clientServer.post(`/register`, {
+        const response = await clientServer.post(`/register`, {
             username: user.username,
             name: user.name,
             email: user.email,
             password: user.password
-        })
+        });
 
-        if (request.data.token) {
-            localStorage.setItem("token", request.data.token)
-        } else {
-            return thunkAPI.rejectWithValue({ message: "token not found" })
-        }
+        const data = response.data;
 
-        return thunkAPI.fulfillWithValue(request.data.token)
-        
+        // Message ko handle karo, token ko nahi expect karo
+        return thunkAPI.fulfillWithValue(data); // 👈 send full response
+
     } catch (error) {
-        return thunkAPI.rejectWithValue(error.response.data)
-        
+        return thunkAPI.rejectWithValue(error.response.data);
     }
+});
 
-
-})
 
 export const getAboutUser = createAsyncThunk("user/getAboutUser", async (user, thunkAPI) => {
     try {

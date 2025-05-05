@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import React, { use, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from "./style.module.css"
-import { loginUser, registerUser } from '@/config/redux/action/authAction'
+import { getAboutUser, loginUser, registerUser } from '@/config/redux/action/authAction'
 import { emptyMessage } from '@/config/redux/reducer/authReducer'
 
 function  loginComponent() {
