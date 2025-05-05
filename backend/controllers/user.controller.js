@@ -232,14 +232,20 @@ export const updateProfileData = async(req, res)=>{
 }
 
 
-export const getAllUserProfile = async(req, res)=>{
+export const getAllUserProfile = async (req, res) => {
     try {
-        const profiles = await Profile.find().populate('userId', 'name email username profilePicture');
-        return res.json(profiles);
+      const profiles = await Profile.find()
+        .populate('userId', 'name email username profilePicture');
+  
+      // ✅ Filter out profiles where userId is null (i.e., deleted user)
+      const validProfiles = profiles.filter(profile => profile.userId !== null);
+  
+      return res.json(validProfiles);
     } catch (error) {
-        return res.status(500).json({message:error.message})
+      return res.status(500).json({ message: error.message });
     }
-}
+  };
+  
 
 export const downloadProfile = async (req, res) => {
     try {
@@ -409,25 +415,40 @@ export const commentPost = async(req, res)=>{
 export const getUserProfileAndUserBasedOnUsername = async (req, res) => {
     let { username } = req.query;
   
+    console.log("Received username in backend:", username); // ✅ First log
+  
     try {
       // Trim and make case-insensitive
       username = username?.trim();
+      console.log("Looking for user:", username); // ✅ After trimming
   
       const user = await User.findOne({ 
         username: new RegExp(`^${username}$`, 'i') // case-insensitive exact match
       });
   
+      console.log("User found:", user); // ✅ After fetching user
+  
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
   
+      console.log("Looking for profile of:", user._id); // ✅ Before fetching profile
+  
       const userProfile = await Profile.findOne({ userId: user._id })
         .populate('userId', 'name email username profilePicture');
+  
+      console.log("Profile found:", userProfile); // ✅ After fetching profile
+  
+      if (!userProfile) {
+        return res.status(404).json({ message: "Profile not found for this user" });
+      }
   
       return res.json({ profile: userProfile });
   
     } catch (error) {
+      console.error("Error in getUserProfileAndUserBasedOnUsername:", error);
       return res.status(500).json({ message: error.message });
     }
   };
+  
   
