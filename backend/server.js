@@ -12,7 +12,8 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:3000',
   'https://pro-connect-linkedin-clone-cb1jrssvq-kumarshubhhs-projects.vercel.app',
-  'https://pro-connect-linkedin-clone-eight.vercel.app'
+  'https://pro-connect-linkedin-clone-eight.vercel.app',
+  'https://pro-connect-linkedin-clone-gwwl3ef39-kumarshubhhs-projects.vercel.app/'
 ];
 
 app.use(cors({
